@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="filter-cotaier" >
+        <h3>FILTERS</h3>
+        <label>Cocktail Name:</label><input placeholder="Cocktail name"/>
+    </div>
+    <div class="cocktails-container">
+        <div class="cocktails" *ngFor="let cocktail of cocktailsList">
+         <img class="cocktail-image" [src]="cocktail.imageUrl">
+         <div class="cocktails-details">
+            <div class="cocktail-title">
+                <a [routerLink]="['/cocktail-details',cocktail.id]">{{cocktail.name}}</a>
+                <span class="icon-star"></span>
+            </div>                         
+             <h6>{{cocktail.drinkType}}</h6>
+             <h6>{{cocktail.drinkIngredients}}</h6>
+         </div>
+        </div> 
+     </div>
+</div>
