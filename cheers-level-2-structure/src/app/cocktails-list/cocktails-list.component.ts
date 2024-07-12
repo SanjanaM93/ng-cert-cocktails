@@ -15,6 +15,8 @@ import { CommonModule } from '@angular/common';
 export class CocktailsListComponent implements OnInit {
 constructor(private http: HttpClient, private service: CocktailsService) {}
 cocktailsList: Cocktail[] = [];
+filterCockTailList: Cocktail[] = [];
+searchName: String;
 ngOnInit() {
   this.service.getCocktailDetails().subscribe((response: Cocktail[])=> {
     console.log(response);
@@ -23,7 +25,29 @@ ngOnInit() {
       data.drinkIngredients = data.ingredients?.join('|');
       this.cocktailsList.push(data);    
     });
+    this.filterCockTailList = this.cocktailsList;
   })
+}
+
+getFilteredList(event: Event) {
+  const target = event.target as HTMLInputElement;
+    this.searchName = target.value;
+    if(!this.searchName){
+      this.filterCockTailList = this.cocktailsList;
+    }else{
+      this.filterCockTailList = this.cocktailsList.filter((item: Cocktail) => {
+        return item?.name.toLowerCase().includes(this.searchName.toLowerCase())
+      }
+      )
+    }
+}
+
+isCocktailFavourite(item: string){
+  return this.service.getFavouriteCocktail(item);
+}
+
+addToFavList(item: string) {
+  return this.service.manageTheFavList(item);
 }
 
 }

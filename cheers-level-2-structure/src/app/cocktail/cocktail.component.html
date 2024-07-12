@@ -1,7 +1,24 @@
 <div class="container">
-    <div>
+    <button class="btn btn-primary" (click)="goBackToDashboard()">Back</button>
+    <div class="ingredients-class">
         <img class="cocktail-image-desc" [src]="cocktailDesc.imageUrl">
-        <h3>{{cocktailDesc.name}}</h3>
+        <div>
+            <div class="cocktail-desc-title">
+                <h3>{{cocktailDesc.name}}</h3>
+                <span class="icon-star" [id]="'star-'+cocktailDesc.id" [ngClass]="{'active':isCocktailFavourite(cocktailDesc.id)}" (click)="addToFavList(cocktailDesc.id)"></span>
+            </div>
+            
+            <h4><span>Type:</span><span>{{cocktailDesc.drinkType}}</span></h4>
+            <div class="ingredients-class">
+                <div><h5>Ingredients:</h5></div>
+                <div>
+                <ul *ngFor="let item of cocktailDesc.ingredients">
+                    <li><h5>{{item}}</h5></li>
+                </ul>
+                </div>
+            </div>
+            <h5>Insruction: {{cocktailDesc.instructions}}</h5>
+        </div>
     </div>
     
 </div>

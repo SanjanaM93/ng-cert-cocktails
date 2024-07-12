@@ -6,7 +6,7 @@ import { Cocktail } from '../models';
   providedIn: 'root'
 })
 export class CocktailsService {
-  
+  favouriteList: string[] = [];
   constructor(private http:HttpClient) { }
 
   getCocktailDetails() {
@@ -18,4 +18,25 @@ export class CocktailsService {
     return this.http.get<Cocktail>(`cockails/${id}`, {params});
   }
 
+  manageTheFavList(item: string) {
+    const isIncluded = this.favouriteList.includes(item);
+    if(isIncluded){
+      const index = this.favouriteList.indexOf(item);
+      this.favouriteList.splice(index,1);
+    }
+    else {
+      this.favouriteList.push(item);
+    }
+
+    console.log(this.favouriteList);
+    sessionStorage.setItem('favouriteCocktail', JSON.stringify(this.favouriteList));
+  }
+
+  getFavouriteCocktail(item: string) {
+    const favkey = sessionStorage.getItem('favouriteCocktail');
+    if(favkey){
+      this.favouriteList = JSON.parse(favkey);
+    }
+    return this.favouriteList.includes(item);
+  }
 }
